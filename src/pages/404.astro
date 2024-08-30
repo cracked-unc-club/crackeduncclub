@@ -1,0 +1,63 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import meme1 from "../../public/whateverthismemeis.webp";
+---
+
+<Layout title="resources">
+  <div class="main-container">
+    <h1 class="header">404</h1>
+    <p class="smaller">(to be)</p>
+    <Image src={meme1} alt="i cant even describe this" loading="eager" />
+    <div class="buttons">
+      <div class="button" onclick="location.href='/'">home</div>
+    </div>
+  </div>
+</Layout>
+<style>
+  .main-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+  }
+
+  .header {
+    color: var(--header);
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  .smaller {
+    color: var(--smaller);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .button {
+    font-size: 1rem;
+    color: var(--header);
+    text-align: center;
+    padding: 15px 30px;
+    border-radius: 5px;
+    background: none;
+    border: 2px solid var(--header);
+    cursor: pointer;
+  }
+  .button:hover {
+    transition: 0.3s;
+    background-color: #ffffff0d;
+    color: #ffffff;
+    border: solid 1px #ffffff;
+    box-shadow: 0px 0px 150px 0px #abd9ff;
+    cursor: pointer;
+  }
+</style>
