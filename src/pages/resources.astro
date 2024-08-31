@@ -29,12 +29,6 @@ const resources: Resource[] = await fetch(
     </p>
     <div class="buttons">
       <div class="button" onclick="location.href='/'">back</div>
-      <div
-        class="button"
-        onclick="location.href='https://discord.gg/tv66jPtapw'"
-      >
-        discord
-      </div>
     </div>
   </div>
 
@@ -61,7 +55,7 @@ const resources: Resource[] = await fetch(
     text-align: center;
     padding: 20px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 100%;
     margin: auto;
     min-height: 100vh;
   }
@@ -104,7 +98,13 @@ const resources: Resource[] = await fetch(
     cursor: pointer;
   }
 
-  /* Scrollbar styling */
+  .resources-container {
+    padding: 20px;
+    max-width: 120%;
+    transform: scale(0.8);
+    transform-origin: top;
+  }
+
   ::-webkit-scrollbar {
     width: 12px;
   }
