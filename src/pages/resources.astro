@@ -1,34 +1,67 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+
+interface Resource {
+  name?: string;
+  url: string;
+  type: string;
+  author?: string;
+}
+
+// Fetch resources from your S3 bucket
+const resources: Resource[] = await fetch(
+  "https://crackeduncclub.s3.us-east-2.amazonaws.com/resources.json"
+)
+  .then((res) => res.json())
+  .catch((err) => {
+    console.error("Error fetching resources:", err);
+    return [];
+  });
 ---
 
 <Layout title="resources">
-  <div class="background"></div>
   <div class="main-container">
     <h1 class="header">resources</h1>
-    <p class="smaller">(to be)</p>
+    <p class="smaller">scroll down</p>
+    <p class="smaller">
+      <span class="lowopacity">(page still in development)</span>
+    </p>
     <div class="buttons">
       <div class="button" onclick="location.href='/'">back</div>
+      <div
+        class="button"
+        onclick="location.href='https://discord.gg/tv66jPtapw'"
+      >
+        discord
+      </div>
     </div>
+  </div>
+
+  <div class="resources-container">
+    {
+      resources.map((resource: Resource) => (
+        <Card
+          title={resource.name || resource.url}
+          url={resource.url}
+          type={resource.type}
+          author={resource.author || "Unknown"}
+        />
+      ))
+    }
   </div>
 </Layout>
 
 <style>
   .main-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -60%);
-    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    z-index: 10;
-    transition:
-      opacity 1s ease-in-out,
-      transform 1s ease-in-out;
-  }
-  body.loaded .main-container {
-    opacity: 1;
-    transform: translate(-50%, -50%);
+    padding: 20px;
+    width: 100%;
+    min-height: 100vh;
   }
 
   .header {
@@ -67,6 +100,24 @@ import Layout from "../layouts/Layout.astro";
     border: solid 1px #ffffff;
     box-shadow: 0px 0px 150px 0px #abd9ff;
     cursor: pointer;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #2c2c2c;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #5353535e;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 </style>
 

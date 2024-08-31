@@ -17,7 +17,8 @@ import Layout from "../layouts/Layout.astro";
   </div>
   <div class="main-container">
     <h1 class="header">wanna get cracked?</h1>
-    <p class="smaller">join 650+ uncs</p>
+    <p class="smaller">join <span id="nbr">800</span>+ uncs</p>
+    <!-- do counting animation later -->
     <div class="buttons">
       <div class="button" onclick="location.href='/resources'">resources</div>
       <div
@@ -31,6 +32,7 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <style>
+  /* Your existing styles */
   .main-container {
     position: absolute;
     top: 50%;
@@ -161,9 +163,36 @@ import Layout from "../layouts/Layout.astro";
     }
   }
 </style>
-
 <script>
   window.onload = () => {
     document.body.classList.add("loaded");
+
+    // Ensure nbrElement is always an HTMLSpanElement
+    const nbrElement = document.getElementById("nbr") as HTMLSpanElement | null;
+
+    // Create an empty HTMLSpanElement if nbrElement is null
+    const element = nbrElement || document.createElement("span");
+    if (element !== nbrElement) {
+      element.id = "nbr";
+      document.querySelector(".smaller")?.appendChild(element);
+    }
+
+    const targetNumber = parseInt(element.textContent || "0", 10);
+    let currentNumber = 0;
+    const duration = 2000; // Duration of the animation in milliseconds
+    const stepTime = 10; // Time between each increment
+
+    function updateNumber() {
+      const increment = Math.ceil(targetNumber / (duration / stepTime));
+      currentNumber += increment;
+      if (currentNumber >= targetNumber) {
+        element.textContent = targetNumber.toString();
+      } else {
+        element.textContent = currentNumber.toString();
+        setTimeout(updateNumber, stepTime);
+      }
+    }
+
+    updateNumber();
   };
 </script>
