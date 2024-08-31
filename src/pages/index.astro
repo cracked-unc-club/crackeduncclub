@@ -17,7 +17,7 @@ import Layout from "../layouts/Layout.astro";
   </div>
   <div class="main-container">
     <h1 class="header">wanna get cracked?</h1>
-    <p class="smaller">join up</p>
+    <p class="smaller">join 650+ uncs</p>
     <div class="buttons">
       <div class="button" onclick="location.href='/resources'">resources</div>
       <div
@@ -35,9 +35,17 @@ import Layout from "../layouts/Layout.astro";
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -60%);
+    opacity: 0;
     text-align: center;
     z-index: 10;
+    transition:
+      opacity 1s ease-in-out,
+      transform 1s ease-in-out;
+  }
+  body.loaded .main-container {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 
   .header {
@@ -153,3 +161,9 @@ import Layout from "../layouts/Layout.astro";
     }
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("loaded");
+  });
+</script>

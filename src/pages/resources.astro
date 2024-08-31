@@ -18,9 +18,17 @@ import Layout from "../layouts/Layout.astro";
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -60%);
+    opacity: 0;
     text-align: center;
     z-index: 10;
+    transition:
+      opacity 1s ease-in-out,
+      transform 1s ease-in-out;
+  }
+  body.loaded .main-container {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 
   .header {
@@ -61,3 +69,8 @@ import Layout from "../layouts/Layout.astro";
     cursor: pointer;
   }
 </style>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("loaded");
+  });
+</script>
