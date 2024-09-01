@@ -5,15 +5,16 @@ export interface Props {
   type: string;
   author: string;
   btn: string;
+  description: string;
 }
 
-const { title, url, type, author, btn } = Astro.props;
+const { title, url, type, author, btn, description } = Astro.props;
 ---
 
 <div class="resource">
   <div class="info">
     <h2 class="title">{title}</h2>
-    <p class="meta">{type} by {author}</p>
+    <p class="meta">{description} by {author}</p>
   </div>
   <a href={url} target="_blank" class="btn">{btn}</a>
 </div>

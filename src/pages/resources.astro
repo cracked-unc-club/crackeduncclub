@@ -8,17 +8,32 @@ interface Resource {
   type: string;
   author?: string;
   btn: string;
+  description: string;
 }
 
-// Fetch resources from your S3 bucket
-const resources: Resource[] = await fetch(
-  "https://crackeduncclub.s3.us-east-2.amazonaws.com/resources.json"
-)
-  .then((res) => res.json())
-  .catch((err) => {
-    console.error("Error fetching resources:", err);
-    return [];
-  });
+let cachedResources: Resource[] | null = null;
+let lastFetchTime: number = 0;
+
+async function fetchResources() {
+  const now = Date.now();
+
+  if (!cachedResources || now - lastFetchTime > 3 * 60 * 60 * 1000) {
+    try {
+      const response = await fetch(
+        "https://crackeduncclub.s3.us-east-2.amazonaws.com/resources.json"
+      );
+      cachedResources = await response.json();
+      lastFetchTime = now;
+    } catch (err) {
+      console.error("Error fetching resources:", err);
+      cachedResources = [];
+    }
+  }
+
+  return cachedResources;
+}
+
+const resources: Resource[] = (await fetchResources()) as Resource[];
 ---
 
 <Layout title="resources">
@@ -43,6 +58,7 @@ const resources: Resource[] = await fetch(
             title={resource.name || resource.url}
             url={resource.url}
             type={resource.type}
+            description={resource.description}
             author={resource.author || "Unknown"}
             btn={btnText}
           />
