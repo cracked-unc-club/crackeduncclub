@@ -4,9 +4,10 @@ export interface Props {
   url: string;
   type: string;
   author: string;
+  btn: string;
 }
 
-const { title, url, type, author } = Astro.props;
+const { title, url, type, author, btn } = Astro.props;
 ---
 
 <div class="resource">
@@ -14,7 +15,7 @@ const { title, url, type, author } = Astro.props;
     <h2 class="title">{title}</h2>
     <p class="meta">{type} by {author}</p>
   </div>
-  <a href={url} target="_blank" class="download">download</a>
+  <a href={url} target="_blank" class="btn">{btn}</a>
 </div>
 
 <style>
@@ -55,7 +56,7 @@ const { title, url, type, author } = Astro.props;
     margin-top: 5px;
   }
 
-  .download {
+  .btn {
     font-size: 1rem;
     color: var(--header);
     text-decoration: none;
@@ -68,7 +69,7 @@ const { title, url, type, author } = Astro.props;
       box-shadow 0.3s;
   }
 
-  .download:hover {
+  .btn:hover {
     background-color: var(--header);
     color: var(--background);
     box-shadow: 0px 0px 15px 2px rgba(171, 217, 255, 0.5);

@@ -7,6 +7,7 @@ interface Resource {
   url: string;
   type: string;
   author?: string;
+  btn: string;
 }
 
 // Fetch resources from your S3 bucket
@@ -34,14 +35,19 @@ const resources: Resource[] = await fetch(
 
   <div class="resources-container">
     {
-      resources.map((resource: Resource) => (
-        <Card
-          title={resource.name || resource.url}
-          url={resource.url}
-          type={resource.type}
-          author={resource.author || "Unknown"}
-        />
-      ))
+      resources.map((resource: Resource) => {
+        const btnText = resource.type === "pdf" ? "download" : "open";
+
+        return (
+          <Card
+            title={resource.name || resource.url}
+            url={resource.url}
+            type={resource.type}
+            author={resource.author || "Unknown"}
+            btn={btnText}
+          />
+        );
+      })
     }
   </div>
 </Layout>
