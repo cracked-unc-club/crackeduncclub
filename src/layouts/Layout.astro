@@ -89,15 +89,15 @@ const {
 
   body {
     background-color: var(--background);
-    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    min-height: 100vh;
     margin: 0;
   }
 
   main {
-    flex: 1; /* Allow main content to grow and take available space */
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -112,7 +112,7 @@ const {
     color: var(--smaller);
     width: 100%;
     padding-bottom: 0.5vh;
-    margin-top: auto; /* Push footer to the bottom */
+    margin-top: auto;
     z-index: 9;
   }
 
@@ -126,8 +126,6 @@ const {
     z-index: 1;
     background: radial-gradient(circle, rgba(0, 10, 20, 0.8), #0a0a0a);
   }
-
-  /* Scrollbar styles */
   ::-webkit-scrollbar {
     width: 12px;
     height: 12px;
