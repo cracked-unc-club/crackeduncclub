@@ -17,8 +17,7 @@ import Layout from "../layouts/Layout.astro";
   </div>
   <div class="main-container">
     <h1 class="header">wanna get cracked?</h1>
-    <p class="smaller">join <span id="nbr">900</span>+ uncs</p>
-    <!-- do counting animation later -->
+    <p class="smaller">join <span id="nbr">1000</span>+ uncs</p>
     <div class="buttons">
       <div class="button" onclick="location.href='/resources'">resources</div>
       <div
@@ -162,34 +161,31 @@ import Layout from "../layouts/Layout.astro";
     }
   }
 </style>
+
 <script>
-  window.onload = () => {
+  window.onload = async () => {
     document.body.classList.add("loaded");
 
-    const nbrElement = document.getElementById("nbr") as HTMLSpanElement | null;
-
-    const element = nbrElement || document.createElement("span");
-    if (element !== nbrElement) {
+    const element =
+      document.getElementById("nbr") || document.createElement("span");
+    if (!element.id) {
       element.id = "nbr";
       document.querySelector(".smaller")?.appendChild(element);
     }
 
-    const targetNumber = parseInt(element.textContent || "0", 10);
-    let currentNumber = 0;
-    const duration = 2000;
-    const stepTime = 10;
+    const targetNumber = await fetch("https://crackedunc.club/api/membercount")
+      .then((res) => res.json())
+      .then((data) => data.memberCount || 1000)
+      .catch(() => 1000);
 
-    function updateNumber() {
-      const increment = Math.ceil(targetNumber / (duration / stepTime));
-      currentNumber += increment;
-      if (currentNumber >= targetNumber) {
-        element.textContent = targetNumber.toString();
-      } else {
-        element.textContent = currentNumber.toString();
-        setTimeout(updateNumber, stepTime);
-      }
-    }
-
-    updateNumber();
+    let currentNumber = 0,
+      increment = Math.ceil(targetNumber / 200);
+    (function update() {
+      element.textContent = Math.min(
+        (currentNumber += increment),
+        targetNumber
+      ).toString();
+      if (currentNumber < targetNumber) setTimeout(update, 10);
+    })();
   };
 </script>

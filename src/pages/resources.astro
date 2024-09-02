@@ -11,29 +11,14 @@ interface Resource {
   description: string;
 }
 
-let cachedResources: Resource[] | null = null;
-let lastFetchTime: number = 0;
+let resources: Resource[] = [];
 
-async function fetchResources() {
-  const now = Date.now();
-
-  if (!cachedResources || now - lastFetchTime > 3 * 60 * 60 * 1000) {
-    try {
-      const response = await fetch(
-        "https://crackeduncclub.s3.us-east-2.amazonaws.com/resources.json"
-      );
-      cachedResources = await response.json();
-      lastFetchTime = now;
-    } catch (err) {
-      console.error("Error fetching resources:", err);
-      cachedResources = [];
-    }
-  }
-
-  return cachedResources;
+try {
+  const response = await fetch("https://crackedunc.club/api/resources.json");
+  resources = await response.json();
+} catch (err) {
+  console.error("Error fetching resources:", err);
 }
-
-const resources: Resource[] = (await fetchResources()) as Resource[];
 ---
 
 <Layout title="resources">
@@ -50,20 +35,16 @@ const resources: Resource[] = (await fetchResources()) as Resource[];
 
   <div class="resources-container">
     {
-      resources.map((resource: Resource) => {
-        const btnText = resource.type === "pdf" ? "download" : "open";
-
-        return (
-          <Card
-            title={resource.name || resource.url}
-            url={resource.url}
-            type={resource.type}
-            description={resource.description}
-            author={resource.author || "Unknown"}
-            btn={btnText}
-          />
-        );
-      })
+      resources.map((resource) => (
+        <Card
+          title={resource.name || resource.url}
+          url={resource.url}
+          type={resource.type}
+          description={resource.description}
+          author={resource.author || "Unknown"}
+          btn={resource.type === "pdf" ? "download" : "open"}
+        />
+      ))
     }
   </div>
 </Layout>
@@ -144,9 +125,3 @@ const resources: Resource[] = (await fetchResources()) as Resource[];
     background: #555;
   }
 </style>
-
-<script>
-  window.onload = () => {
-    document.body.classList.add("loaded");
-  };
-</script>
