@@ -14,11 +14,16 @@ interface Resource {
 let resources: Resource[] = [];
 
 try {
+  console.log("attempting to fetch resources...");
   const response = await fetch("https://crackedunc.club/api/resources.json");
+  console.log("res:", response);
   resources = await response.json();
+  console.log("res JSON parsed:", resources);
 } catch (err) {
-  console.error("Error fetching resources:", err);
+  console.error("err fetching resources:", err);
 }
+
+console.log("rendering with resources:", resources);
 ---
 
 <Layout title="resources">
