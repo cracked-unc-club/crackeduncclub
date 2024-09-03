@@ -1,14 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
-import meme1 from "../../public/whateverthismemeis.webp";
+import cat1 from "../../public/cat1.webp";
 ---
 
 <Layout title="resources">
   <div class="main-container">
     <h1 class="header">404</h1>
-    <p class="smaller">(to be)</p>
-    <Image src={meme1} alt="i cant even describe this" loading="eager" />
+    <p class="smaller">
+      (developed by <a
+        href="https://x.com/awpenheimer_"
+        target="_blank"
+        aria-label="link to X (formerly Twitter)">awpy</a
+      >)
+    </p>
+    <Image src={cat1} alt="cute cat eating ice cream" loading="eager" />
     <div class="buttons">
       <div class="button" onclick="location.href='/'">home</div>
     </div>
